@@ -2,102 +2,110 @@
 
 $path = '/Users/callumacrae/Music/iTunes/iTunes Music Library Backup.xml';
 
-function parseValue( $valueNode ) {
-  $valueType = $valueNode->nodeName;
+function parse_value($value_node)
+{
+	$value_type = $value_node->nodeName;
 
-  $transformerName = "parse_$valueType";
+	$transformer_name = "parse_$value_type";
 
-  if ( is_callable($transformerName) ) {
-    // there is a transformer function for this node type
-    return call_user_func($transformerName, $valueNode);
-  }
+	if (is_callable($transformer_name))
+	{
+		// there is a transformer function for this node type
+		return call_user_func($transformer_name, $value_node);
+	}
 
-  // if no transformer was found
-  return null;
+	// if no transformer was found
+	return null;
 }
 
-function parse_integer( $integerNode ) {
-  return $integerNode->textContent;
+function parse_integer($integer_node)
+{
+	return $integer_node->textContent;
 }
 
-function parse_string( $stringNode ) {
-  return $stringNode->textContent;  
+function parse_string($string_node)
+{
+	return $string_node->textContent;  
 }
 
-function parse_date( $dateNode ) {
-  return $dateNode->textContent;
+function parse_date($date_node)
+{
+	return $date_node->textContent;
 }
 
-function parse_true( $trueNode ) {
-  return true;
+function parse_true($true_node)
+{
+	return true;
 }
 
-function parse_false( $trueNode ) {
-  return false;
+function parse_false($true_node)
+{
+	return false;
 }
 
-function parse_dict( $dictNode ) {
-  $dict = array();
+function parse_dict($dict_node)
+{
+	$dict = array();
 
-  // for each child of this node
-  for (
-    $node = $dictNode->firstChild;
-    $node != null;
-    $node = $node->nextSibling
-  ) {
-    if ( $node->nodeName == "key" ) {
-      $key = $node->textContent;
+	// for each child of this node
+	for ($node = $dict_node->firstChild; $node != null; $node = $node->nextSibling)
+	{
+		if ($node->nodeName == 'key')
+		{
+			$key = $node->textContent;
 
-      $valueNode = $node->nextSibling;
+			$value_node = $node->nextSibling;
 
-      // skip text nodes
-      while ( $valueNode->nodeType == XML_TEXT_NODE ) {
-        $valueNode = $valueNode->nextSibling;
-      }
+			// skip text nodes
+			while ($value_node->nodeType == XML_TEXT_NODE)
+			{
+				$value_node = $value_node->nextSibling;
+			}
 
-      // recursively parse the children
-      $value = parseValue($valueNode);
+			// recursively parse the children
+			$value = parse_value($value_node);
 
-      $dict[$key] = $value;
-    }
-  }
+			$dict[$key] = $value;
+		}
+	}
 
-  return $dict;
+	return $dict;
 }
 
-function parse_array( $arrayNode ) {
-  $array = array();
+function parse_array($array_node)
+{
+	$array = array();
 
-  for (
-    $node = $arrayNode->firstChild;
-    $node != null;
-    $node = $node->nextSibling
-  ) {
-    if ( $node->nodeType == XML_ELEMENT_NODE ) {
-      array_push($array, parseValue($node));
-    }
-  }
+	for ($node = $array_node->firstChild; $node != null; $node = $node->nextSibling)
+	{
+		if ($node->nodeType == XML_ELEMENT_NODE)
+		{
+			array_push($array, parse_value($node));
+		}
+	}
 
-  return $array;
+	return $array;
 }
 
 $plistDocument = new DOMDocument();
 $plistDocument->load($path);
 
-function parsePlist( $document ) {
-  $plistNode = $document->documentElement;
+function parse_plist($document)
+{
+	$plist_node = $document->documentElement;
 
-  $root = $plistNode->firstChild;
+	$root = $plist_node->firstChild;
 
-  // skip any text nodes before the first value node
-  while ( $root->nodeName == "#text" ) {
-    $root = $root->nextSibling;
-  }
+	// skip any text nodes before the first value node
+	while ($root->nodeName == '#text')
+	{
+		$root = $root->nextSibling;
+	}
 
-  return parseValue($root);
+	return parse_value($root);
 }
 
-$array = parsePlist($plistDocument);
+$array = parse_plist($plistDocument);
 
 $total_time = 0;
 
@@ -113,6 +121,7 @@ foreach ($array['Tracks'] as $track)
 
 $total_time /= 1000;
 
+echo PHP_EOL;
 echo 'Total time in seconds: ' . $total_time . PHP_EOL;
 echo 'Total time in hours: ' . $total_time/3600 . PHP_EOL;
 echo PHP_EOL;
@@ -140,3 +149,4 @@ foreach($units as $unit => $mult)
 $output = substr($output, strlen(', '));
 
 echo $output . PHP_EOL;
+echo PHP_EOL;
