@@ -1,8 +1,23 @@
 <?php
 
+/**
+ * @package callumacrae's plist parser
+ * @version 1.0.0
+ * @copyright (c) Callum Macrae 2011
+ * @license http://creativecommons.org/licenses/by-sa/3.0/ CC by-sa
+ *
+ * Demo: iTunes library parser
+ *
+ * DO NOT USE THIS ON A LIVE SERVER, EVER!
+ * The file name is NOT escaped
+ */
+
 require('./plist.php');
 
-$array = plist::parse('/Users/callumacrae/Music/iTunes/iTunes Music Library Backup.xml');
+//default file to parse
+$default = '/Users/callumacrae/Music/iTunes/iTunes Music Library Backup.xml'
+
+$array = plist::parse(isset($_GET['path']) ? $_GET['path'] : $default);
 
 $total_time = 0;
 

@@ -1,5 +1,17 @@
 <?php
 
+/**
+ * @package callumacrae's plist parser
+ * @version 1.0.0
+ * @copyright (c) Callum Macrae 2011
+ * @license http://creativecommons.org/licenses/by-sa/3.0/ CC by-sa
+ * 
+ * Thanks for using (or looking at) this plist parser! It's pretty
+ * easy to use, just do $yourvar = plist::parse('path/to/file') and
+ * an array will be returned. Please visit my website:
+ * http://lynxphp.com/
+ */
+
 class plist
 {
 	public function parse($path)
