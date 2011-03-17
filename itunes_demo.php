@@ -15,7 +15,7 @@
 require('./plist.php');
 
 //default file to parse
-$default = '/Users/callumacrae/Music/iTunes/iTunes Music Library Backup.xml'
+$default = '/Users/callumacrae/Music/iTunes/iTunes Music Library Backup.xml';
 
 $array = plist::parse(isset($_GET['path']) ? $_GET['path'] : $default);
 
