@@ -14,7 +14,7 @@
 
 class plist
 {
-	public function parse($path)
+	public static function parse($path)
 	{
 		$document = new DOMDocument();
 		$document->load($path);
@@ -32,7 +32,7 @@ class plist
 		return self::parse_value($root);
 	}
 	
-	public function parse_value($value_node)
+	private static function parse_value($value_node)
 	{
 		$value_type = $value_node->nodeName;
 
@@ -47,32 +47,32 @@ class plist
 		return null;
 	}
 	
-	function parse_integer($integer_node)
+	private static function parse_integer($integer_node)
 	{
 		return $integer_node->textContent;
 	}
 	
-	function parse_string($string_node)
+	private static function parse_string($string_node)
 	{
 		return $string_node->textContent;  
 	}
 
-	function parse_date($date_node)
+	private static function parse_date($date_node)
 	{
 		return $date_node->textContent;
 	}
 
-	function parse_true($true_node)
+	private static function parse_true($true_node)
 	{
 		return true;
 	}
 
-	function parse_false($true_node)
+	private static function parse_false($true_node)
 	{
 		return false;
 	}
 	
-	function parse_dict($dict_node)
+	private static function parse_dict($dict_node)
 	{
 		$dict = array();
 
@@ -101,7 +101,7 @@ class plist
 		return $dict;
 	}
 	
-	function parse_array($array_node)
+	private static function parse_array($array_node)
 	{
 		$array = array();
 
