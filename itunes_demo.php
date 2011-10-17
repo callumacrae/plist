@@ -15,7 +15,7 @@
 require('./plist.php');
 
 //default file to parse
-$default = '/Users/callumacrae/Music/iTunes/iTunes Music Library Backup.xml';
+$default = '/Users/callumacrae/Music/iTunes/iTunes Music Library.xml';
 
 $array = plist::parse(isset($_GET['path']) ? $_GET['path'] : $default);
 
@@ -23,7 +23,7 @@ $total_time = 0;
 
 foreach ($array['Tracks'] as $track)
 {
-	if (empty($track['Play Count']))
+	if (empty($track['Play Count']) || empty($track['Total Time']))
 	{
 		continue;
 	}
@@ -49,6 +49,7 @@ $units = array(
 );
 
 $diff = $total_time;
+$output = '';
 
 foreach($units as $unit => $mult)
 {
