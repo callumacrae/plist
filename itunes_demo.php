@@ -35,7 +35,7 @@ $total_time /= 1000;
 
 echo PHP_EOL;
 echo 'Total time in seconds: ' . $total_time . PHP_EOL;
-echo 'Total time in hours: ' . $total_time/3600 . PHP_EOL;
+echo 'Total time in hours: ' . $total_time / 3600 . PHP_EOL;
 echo PHP_EOL;
 
 $units = array(
