@@ -14,7 +14,7 @@
 
 require('./plist.php');
 
-//default file to parse
+// Default file to parse
 $default = '/Users/callumacrae/Music/iTunes/iTunes Music Library.xml';
 
 $array = plist::parse(isset($_GET['path']) ? $_GET['path'] : $default);
@@ -35,13 +35,13 @@ echo 'Total time in hours: ' . round($total_time / 3600, 2) . PHP_EOL;
 echo PHP_EOL;
 
 $units = array(
-	'year'		=> 29030400, // seconds in a year
-	'month'		=> 2419200,  // seconds in a month
-	'week'		=> 604800,   // seconds in a week
-	'day'		=> 86400,    // seconds in a day
-	'hour'		=> 3600,     // seconds in an hour
-	'minute'	=> 60,       // seconds in a minute
-	'second'	=> 1         // 1 second
+	'year'		=> 29030400, // Seconds in a year
+	'month'		=> 2419200,  // Seconds in a month
+	'week'		=> 604800,   // Seconds in a week
+	'day'		=> 86400,    // Seconds in a day
+	'hour'		=> 3600,     // Seconds in an hour
+	'minute'	=> 60,       // Seconds in a minute
+	'second'	=> 1         // Seconds in... a second
 );
 
 $diff = $total_time;
@@ -49,7 +49,7 @@ $output = '';
 
 foreach ($units as $unit => $mult) {
 	if ($diff >= $mult) {
-		$output .= (($mult != 1) ? ', ' : ' and ') . intval($diff / $mult) . ' ' . $unit . ((intval($diff / $mult) == 1) ? null : 's');
+		$output .= ($mult !== 1 ? ', ' : ' and ') . intval($diff / $mult) . ' ' . $unit . (intval($diff / $mult) === 1 ? '' : 's');
 		$diff -= intval($diff / $mult) * $mult;
 	}
 }
