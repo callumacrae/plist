@@ -1,9 +1,9 @@
 <?php
 
 /**
- * @package callumacrae's plist parser
- * @version 1.0.0
- * @copyright (c) Callum Macrae 2011
+ * @package callumacrae/plist
+ * @version 1.1.0
+ * @copyright (c) Callum Macrae 2011 - 3012
  * @license http://creativecommons.org/licenses/by-sa/3.0/ CC by-sa
  *
  * Demo: iTunes library parser
@@ -21,14 +21,10 @@ $array = plist::parse(isset($_GET['path']) ? $_GET['path'] : $default);
 
 $total_time = 0;
 
-foreach ($array['Tracks'] as $track)
-{
-	if (empty($track['Play Count']) || empty($track['Total Time']))
-	{
-		continue;
+foreach ($array['Tracks'] as $track) {
+	if (!empty($track['Play Count']) && !empty($track['Total Time'])) {
+		$total_time += $track['Total Time'] * $track['Play Count'];
 	}
-
-	$total_time += $track['Total Time'] * $track['Play Count'];
 }
 
 $total_time /= 1000;
@@ -51,10 +47,8 @@ $units = array(
 $diff = $total_time;
 $output = '';
 
-foreach($units as $unit => $mult)
-{
-	if ($diff >= $mult)
-	{
+foreach ($units as $unit => $mult) {
+	if ($diff >= $mult) {
 		$output .= (($mult != 1) ? ', ' : ' and ') . intval($diff / $mult) . ' ' . $unit . ((intval($diff / $mult) == 1) ? null : 's');
 		$diff -= intval($diff / $mult) * $mult;
 	}
