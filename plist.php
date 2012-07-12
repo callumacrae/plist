@@ -13,6 +13,14 @@
  */
 
 class plist {
+	/**
+	 * Parse given plist file and returned parsed array.
+	 *
+	 * @static
+	 *
+	 * @param string $path Path to plist file to parse.
+	 * @return mixed Parsed data.
+	 */
 	public static function Parse($path) {
 		$document = new DOMDocument();
 		$document->load($path);
@@ -28,7 +36,16 @@ class plist {
 
 		return self::parse_value($root);
 	}
-	
+
+	/**
+	 * Parses given DOMDocument. Internal.
+	 *
+	 * @static
+	 * @private
+	 *
+	 * @param DOMDocument $value_node DOMDocument to parse.
+	 * @return mixed Parsed value (or null if data doesn't exist).
+	 */
 	private static function parse_value($value_node) {
 		$value_type = $value_node->nodeName;
 
@@ -41,27 +58,80 @@ class plist {
 		// If no transformer was found
 		return null;
 	}
-	
+
+	/**
+	 * Transformer. Parses given integer.
+	 *
+	 * @static
+	 * @private
+	 *
+	 * @param Node $integer_node The integer node.
+	 * @return int Parsed integer.
+	 */
 	private static function parse_integer($integer_node) {
 		return $integer_node->textContent;
 	}
-	
+
+	/**
+	 * Transformer. Parses given string.
+	 *
+	 * @static
+	 * @private
+	 *
+	 * @param Node $string_node The string node.
+	 * @return string Parsed string.
+	 */
 	private static function parse_string($string_node) {
 		return $string_node->textContent;  
 	}
 
+	/**
+	 * Transformer. Parses given date.
+	 *
+	 * @static
+	 * @private
+	 *
+	 * @param Node $date_node The date node.
+	 * @return string Parsed date.
+	 */
 	private static function parse_date($date_node) {
 		return $date_node->textContent;
 	}
 
+	/**
+	 * Transformer. Parses given true value (returns true).
+	 *
+	 * @static
+	 * @private
+	 *
+	 * @param Node $true_node The true node.
+	 * @return bool True.
+	 */
 	private static function parse_true($true_node) {
 		return true;
 	}
-
-	private static function parse_false($true_node) {
+	/**
+	 * Transformer. Parses given false value (returns false).
+	 *
+	 * @static
+	 * @private
+	 *
+	 * @param Node $false_node The false node.
+	 * @return bool False.
+	 */
+	private static function parse_false($false_node) {
 		return false;
 	}
-	
+
+	/**
+	 * Transformer. Parses given dictionary into a PHP array.
+	 *
+	 * @static
+	 * @private
+	 *
+	 * @param Node $dict_node The dictionary node.
+	 * @return array The parsed array.
+	 */
 	private static function parse_dict($dict_node) {
 		$dict = array();
 
@@ -87,7 +157,16 @@ class plist {
 
 		return $dict;
 	}
-	
+
+	/**
+	 * Transformer. Parses given array into a PHP array.
+	 *
+	 * @static
+	 * @private
+	 *
+	 * @param Node $array_node The array node.
+	 * @return array The parsed array.
+	 */
 	private static function parse_array($array_node) {
 		$array = array();
 
