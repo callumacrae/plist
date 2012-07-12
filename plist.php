@@ -14,7 +14,7 @@
 
 class plist {
 	/**
-	 * Parse given plist file and returned parsed array.
+	 * Parse given plist file and return parsed array.
 	 *
 	 * @static
 	 *
