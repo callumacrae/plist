@@ -1,0 +1,22 @@
+{
+	"name": "callumacrae/plist",
+	"type": "library",
+	"description": "A plist parser for PHP",
+	"keywords": ["plist", "parser", "xml"],
+	"homepage": "https://github.com/callumacrae/plist",
+	"license": "CC By-Sa 3.0",
+	"authors": [
+		{
+			"name": "Callum Macrae",
+			"email": "callum@lynxphp.com",
+			"homepage": "http://lynxphp.com",
+			"role": "Developer"
+		}
+	],
+	"require": {
+		"php": ">=5.2.0"
+	},
+	"autoload": {
+		"psr-0": {"plist": "./"}
+	}
+}
