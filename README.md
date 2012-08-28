@@ -6,7 +6,7 @@ This plist parser simply parses a plist file and returns an array of data found 
 $array = plist::Parse('path/to/file');
 ```
 
-*DO NOT USE THE DEMO ON A LIVE SERVER.* It can use a lot of resources, and is also vulnerable to RFI injection (kind of intentional to keep the script simpler).
+The demo (itunes_demo.php) will parse the iTunes plist file - remember to tell it where it is - and tell you how long you have listened to your music for. *DO NOT USE THE DEMO ON A LIVE SERVER.* It can use a lot of resources, and is also vulnerable to RFI injection (kind of intentional to keep the script simpler).
 
 It is released under the Creative Commons Attribution-ShareAlike 3.0 Unported (CC BY-SA 3.0) license:
 http://creativecommons.org/licenses/by-sa/3.0/
